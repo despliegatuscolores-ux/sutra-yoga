@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SŪTRA · Encarnando a Patañjali en la Vida Diaria</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tipografías: Cormorant Garamond para el rigor contemplativo e Inter para legibilidad -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            ash: {
+              50: '#FBF9F5',
+              100: '#F4EFE6',
+              200: '#E8E0D2',
+              300: '#D6C8B2',
+              400: '#B8A48B',
+              500: '#948067',
+              600: '#73624D',
+              700: '#524536',
+              800: '#332B22',
+              900: '#1A1611',
+            },
+            sage: {
+              50: '#F4F7F4',
+              100: '#E5EDE6',
+              200: '#CCDCCC',
+              600: '#4E6B56',
+              700: '#3D5443',
+              800: '#2C3D31',
+              900: '#1C271F',
+            },
+            terracotta: {
+              500: '#C86D51',
+              600: '#B0563A',
+              700: '#91412A',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Suavidad en transiciones y detalles visuales */
+    * {
+      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease;
+    }
+    .breath-circle {
+      transition: transform 4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    /* Estilización de barra de desplazamiento sutil */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 128, 103, 0.25);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(148, 128, 103, 0.45);
+    }
+  </style>
+</head>
+<body class="h-full bg-ash-50 text-ash-900 dark:bg-[#121210] dark:text-ash-100 font-sans selection:bg-ash-200 dark:selection:bg-ash-800 flex flex-col antialiased">
+
+  <!-- ================= NOTIFICACIÓN TOAST FLOTANTE ================= -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 bg-ash-900 text-ash-50 dark:bg-ash-100 dark:text-ash-900 px-5 py-3 rounded-xl shadow-2xl text-sm font-medium flex items-center space-x-3 border border-ash-700/30">
+    <span id="toast-icon">✨</span>
+    <span id="toast-msg">Mensaje informativo</span>
+  </div>
+
+  <!-- ================= ENCABEZADO Y NAVEGACIÓN ================= -->
+  <header class="border-b border-ash-200/80 dark:border-neutral-800/80 bg-ash-50/80 dark:bg-[#121210]/80 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+      
+      <!-- Logo y Título -->
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('daily')">
+        <div class="w-10 h-10 rounded-full bg-ash-200 dark:bg-neutral-800 flex items-center justify-center text-terracotta-500 font-serif font-bold text-xl shadow-inner">
+          ॐ
+        </div>
+        <div>
+          <span class="font-serif tracking-widest text-lg font-bold uppercase block leading-none">Patañjali</span>
+          <span class="text-[10px] tracking-widest uppercase text-ash-500 dark:text-ash-400 font-medium">El Camino del Testigo</span>
+        </div>
+      </div>
+
+      <!-- Menú de Pestañas Principal (Desktop) -->
+      <nav class="hidden md:flex items-center space-x-1 text-xs font-semibold tracking-wider uppercase">
+        <button onclick="switchTab('daily')" id="nav-daily" class="nav-btn px-3 py-2 rounded-lg text-terracotta-600 dark:text-terracotta-500 font-bold bg-ash-100 dark:bg-neutral-800/80">
+          Aforismo Vivo
+        </button>
+        <button onclick="switchTab('alchemy')" id="nav-alchemy" class="nav-btn px-3 py-2 rounded-lg text-ash-600 dark:text-ash-300 hover:text-ash-900 dark:hover:text-white">
+          Pratipakṣa (Alquimia)
+        </button>
+        <button onclick="switchTab('pranayama')" id="nav-pranayama" class="nav-btn px-3 py-2 rounded-lg text-ash-600 dark:text-ash-300 hover:text-ash-900 dark:hover:text-white">
+          Aquietamiento
+        </button>
+        <button onclick="switchTab('saksin')" id="nav-saksin" class="nav-btn px-3 py-2 rounded-lg text-ash-600 dark:text-ash-300 hover:text-ash-900 dark:hover:text-white">
+          Diario del Testigo
+        </button>
+        <button onclick="switchTab('library')" id="nav-library" class="nav-btn px-3 py-2 rounded-lg text-ash-600 dark:text-ash-300 hover:text-ash-900 dark:hover:text-white">
+          Biblioteca Sūtras
+        </button>
+      </nav>
+
+      <!-- Racha y Ajustes / Modo Oscuro -->
+      <div class="flex items-center space-x-3">
+        <!-- Contador de Días de Práctica -->
+        <div class="flex items-center space-x-1.5 bg-ash-100 dark:bg-neutral-800/60 border border-ash-200 dark:border-neutral-700/50 px-3 py-1.5 rounded-full text-xs" title="Días consecutivos recordando la Presencia">
+          <span class="text-terracotta-500">🪔</span>
+          <span class="font-semibold text-ash-700 dark:text-ash-200" id="streak-counter">0 días</span>
+        </div>
+
+        <!-- Botón Modo Oscuro / Claro -->
+        <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-ash-100 dark:hover:bg-neutral-800 text-ash-600 dark:text-ash-300 focus:outline-none" aria-label="Cambiar tema">
+          <svg id="theme-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Menú Móvil (Horizontal scrollable) -->
+    <div class="flex md:hidden overflow-x-auto px-4 py-2 space-x-2 border-t border-ash-200/50 dark:border-neutral-800 text-xs uppercase tracking-wider font-semibold no-scrollbar">
+      <button onclick="switchTab('daily')" id="mob-nav-daily" class="whitespace-nowrap px-3 py-1.5 rounded-md bg-ash-200 dark:bg-neutral-800">Aforismo</button>
+      <button onclick="switchTab('alchemy')" id="mob-nav-alchemy" class="whitespace-nowrap px-3 py-1.5 rounded-md">Pratipakṣa</button>
+      <button onclick="switchTab('pranayama')" id="mob-nav-pranayama" class="whitespace-nowrap px-3 py-1.5 rounded-md">Respiración</button>
+      <button onclick="switchTab('saksin')" id="mob-nav-saksin" class="whitespace-nowrap px-3 py-1.5 rounded-md">El Testigo</button>
+      <button onclick="switchTab('library')" id="mob-nav-library" class="whitespace-nowrap px-3 py-1.5 rounded-md">Biblioteca</button>
+    </div>
+  </header>
+
+  <!-- ================= CONTENEDOR PRINCIPAL ================= -->
+  <main class="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 py-8">
+
+    <!-- ================= SECCIÓN 1: AFORISMO DIARIO ================= -->
+    <section id="view-daily" class="view-content space-y-8">
+      
+      <!-- Encabezado Inspirador -->
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="text-xs uppercase tracking-widest text-terracotta-600 dark:text-terracotta-500 font-bold">Encarnación de Hoy</span>
+        <h1 class="text-3xl sm:text-4xl font-serif font-bold text-ash-900 dark:text-ash-100">Vaciar para que el Ser Habite en Ti</h1>
+        <p class="text-sm text-ash-600 dark:text-ash-400">
+          Un aforismo no es una teoría para memorizar, sino un espejo para reconocer la Realidad y actuar desde la Consciencia Pura.
+        </p>
+      </div>
+
+      <!-- Tarjeta del Sūtra Activo -->
+      <div class="bg-white dark:bg-[#181816] border border-ash-200 dark:border-neutral-800 rounded-3xl p-6 sm:p-10 shadow-sm relative overflow-hidden">
+        
+        <!-- Indicador de Referencia / Sutra ID -->
+        <div class="flex items-center justify-between border-b border-ash-100 dark:border-neutral-800/80 pb-4 mb-6">
+          <div class="flex items-center space-x-2">
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-ash-100 dark:bg-neutral-800 text-ash-700 dark:text-ash-300" id="daily-sutra-number">
+              Sūtra 1.2
+            </span>
+            <span class="text-xs uppercase tracking-wider font-semibold text-sage-600 dark:text-sage-200" id="daily-sutra-pada">
+              Samādhi Pāda
+            </span>
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <button onclick="chooseRandomSutra()" class="text-xs text-ash-500 hover:text-ash-800 dark:hover:text-ash-200 flex items-center space-x-1 p-1" title="Contemplar otro aforismo">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+              <span class="hidden sm:inline">Inspirar otro</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Sánscrito & Traducción -->
+        <div class="space-y-4 text-center my-6">
+          <div class="text-2xl sm:text-3xl font-serif text-ash-800 dark:text-ash-200 tracking-wide font-normal italic" id="daily-sutra-sanskrit">
+            yogaś citta-vṛtti-nirodhaḥ
+          </div>
+          <div class="text-xs tracking-widest text-ash-400 dark:text-ash-500 font-mono" id="daily-sutra-phonetic">
+            [ yoga-sh chitta-vritti-nirodhah ]
+          </div>
+          <div class="text-xl sm:text-2xl font-serif text-terracotta-600 dark:text-terracotta-500 font-semibold max-w-xl mx-auto pt-2" id="daily-sutra-translation">
+            «El Yoga es el cese del torbellino identitario de la mente.»
+          </div>
+        </div>
+
+        <!-- Dimensiones de Integración: Clave Cotidiana y Micro-práctica -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-ash-100 dark:border-neutral-800/80">
+          
+          <div class="bg-ash-50/70 dark:bg-neutral-900/40 p-5 rounded-2xl border border-ash-200/50 dark:border-neutral-800">
+            <h4 class="text-xs font-bold tracking-widest uppercase text-ash-500 dark:text-ash-400 flex items-center space-x-2 mb-2">
+              <span>🧭</span>
+              <span>La Clave Cotidiana</span>
+            </h4>
+            <p class="text-sm leading-relaxed text-ash-700 dark:text-ash-300" id="daily-sutra-essence">
+              Tus pensamientos, ansiedades y juicios son fenómenos meteorológicos temporales. No son tu identidad. Cuando dejas de remar a favor o en contra de la tormenta mental, surge el lago en calma.
+            </p>
+          </div>
+
+          <div class="bg-sage-50/80 dark:bg-sage-900/20 p-5 rounded-2xl border border-sage-200/60 dark:border-sage-800/50">
+            <h4 class="text-xs font-bold tracking-widest uppercase text-sage-700 dark:text-sage-200 flex items-center space-x-2 mb-2">
+              <span>🌿</span>
+              <span>Práctica de Encarnación</span>
+            </h4>
+            <p class="text-sm leading-relaxed text-ash-700 dark:text-ash-300" id="daily-sutra-action">
+              Hoy, cada vez que sientas prisa o reactividad, haz una pausa de 3 respiraciones y susurra mentalmente: «Esto es solo una fluctuación, yo soy el espacio donde ocurre».
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Botones de Acción de la Tarjeta -->
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
+          <button id="btn-mark-practiced" onclick="markPracticedToday()" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-terracotta-600 hover:bg-terracotta-700 text-white font-medium text-sm flex items-center justify-center space-x-2 shadow-md hover:shadow-lg transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <span id="btn-practiced-text">Marcar como vivido hoy</span>
+          </button>
+
+          <div class="flex items-center space-x-3 w-full sm:w-auto">
+            <button onclick="openReflectionModal()" class="w-full sm:w-auto px-4 py-3 rounded-xl border border-ash-300 dark:border-neutral-700 hover:bg-ash-100 dark:hover:bg-neutral-800 text-xs uppercase tracking-wider font-semibold flex items-center justify-center space-x-2">
+              <span>✍️</span>
+              <span>Anotar al Testigo</span>
+            </button>
+            <button onclick="shareSutraText()" class="px-4 py-3 rounded-xl border border-ash-300 dark:border-neutral-700 hover:bg-ash-100 dark:hover:bg-neutral-800 text-xs font-semibold flex items-center justify-center" title="Copiar aforismo y práctica">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Recordatorio de los 3 Pasos del Testigo -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+        <div class="p-5 rounded-2xl bg-white/60 dark:bg-[#181816]/60 border border-ash-200/70 dark:border-neutral-800/80">
+          <div class="text-terracotta-500 font-serif text-2xl font-bold mb-1">1. Śravaṇa</div>
+          <div class="text-xs font-bold uppercase tracking-wider text-ash-500 mb-1">Escuchar con pureza</div>
+          <p class="text-xs text-ash-600 dark:text-ash-400">Recibe la enseñanza sin juzgarla con tu mente habitual.</p>
+        </div>
+        <div class="p-5 rounded-2xl bg-white/60 dark:bg-[#181816]/60 border border-ash-200/70 dark:border-neutral-800/80">
+          <div class="text-terracotta-500 font-serif text-2xl font-bold mb-1">2. Manana</div>
+          <div class="text-xs font-bold uppercase tracking-wider text-ash-500 mb-1">Reflexión Lúcida</div>
+          <p class="text-xs text-ash-600 dark:text-ash-400">Pregúntate: ¿dónde me aferro a lo falso en mi propia jornada?</p>
+        </div>
+        <div class="p-5 rounded-2xl bg-white/60 dark:bg-[#181816]/60 border border-ash-200/70 dark:border-neutral-800/80">
+          <div class="text-terracotta-500 font-serif text-2xl font-bold mb-1">3. Nididhyāsana</div>
+          <div class="text-xs font-bold uppercase tracking-wider text-ash-500 mb-1">Encarnación Plena</div>
+          <p class="text-xs text-ash-600 dark:text-ash-400">Permite que la comprensión se convierta en tu forma de respirar y mirar.</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= SECCIÓN 2: LABORATORIO PRATIPAKṢA BHĀVANĀ ================= -->
+    <section id="view-alchemy" class="view-content hidden space-y-6">
+      
+      <div class="max-w-2xl mx-auto text-center space-y-2">
+        <span class="text-xs uppercase tracking-widest text-terracotta-600 dark:text-terracotta-500 font-bold">Sūtra 2.33 · vitarka-bādhane pratipakṣa-bhāvanam</span>
+        <h2 class="text-3xl font-serif font-bold">Laboratorio de Alquimia Mental</h2>
+        <p class="text-sm text-ash-600 dark:text-ash-400">
+          Cuando surjan pensamientos negativos o destructivos, cultiva deliberadamente la cualidad opuesta. No reprimas: transmuta.
+        </p>
+      </div>
+
+      <div class="max-w-2xl mx-auto bg-white dark:bg-[#181816] border border-ash-200 dark:border-neutral-800 rounded-3xl p-6 sm:p-8 shadow-sm">
+        
+        <!-- Pasos interactivos -->
+        <div class="flex items-center justify-between mb-8 px-2">
+          <div class="flex flex-col items-center">
+            <div id="step-indicator-1" class="w-8 h-8 rounded-full bg-terracotta-600 text-white flex items-center justify-center font-bold text-xs">1</div>
+            <span class="text-[10px] uppercase font-bold tracking-wider mt-1 text-ash-600 dark:text-ash-400">Reconocer</span>
+          </div>
+          <div class="flex-1 h-0.5 bg-ash-200 dark:bg-neutral-800 mx-2"></div>
+          <div class="flex flex-col items-center">
+            <div id="step-indicator-2" class="w-8 h-8 rounded-full bg-ash-200 dark:bg-neutral-800 text-ash-600 dark:text-ash-300 flex items-center justify-center font-bold text-xs">2</div>
+            <span class="text-[10px] uppercase font-bold tracking-wider mt-1 text-ash-600 dark:text-ash-400">Desidentificar</span>
+          </div>
+          <div class="flex-1 h-0.5 bg-ash-200 dark:bg-neutral-800 mx-2"></div>
+          <div class="flex flex-col items-center">
+            <div id="step-indicator-3" class="w-8 h-8 rounded-full bg-ash-200 dark:bg-neutral-800 text-ash-600 dark:text-ash-300 flex items-center justify-center font-bold text-xs">3</div>
+            <span class="text-[10px] uppercase font-bold tracking-wider mt-1 text-ash-600 dark:text-ash-400">Transmutar</span>
+          </div>
+        </div>
+
+        <!-- Paso 1 -->
+        <div id="alchemy-step-1" class="space-y-4">
+          <div class="border-l-4 border-terracotta-500 pl-4 py-1">
+            <h3 class="font-bold text-base">Paso 1: ¿Qué tormenta o juicio nubla tu mente en este instante?</h3>
+            <p class="text-xs text-ash-500">Miedo, rabia, envidia, juicio, afán de control, insuficiencia.</p>
+          </div>
+          <textarea id="alchemy-negative-input" rows="4" class="w-full bg-ash-50 dark:bg-neutral-900 border border-ash-200 dark:border-neutral-700 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-terracotta-500 resize-none" placeholder="Ejemplo: Siento resentimiento hacia mi compañero por no reconocer mi esfuerzo. Mi mente no para de rumiar argumentos..."></textarea>
+          
+          <div class="flex flex-wrap gap-2 text-xs">
+            <span class="text-ash-400 self-center">Filtro rápido:</span>
+            <button onclick="setQuickKlesha('Ira y resentimiento hacia otra persona')" class="px-2.5 py-1 bg-ash-100 dark:bg-neutral-800 rounded-lg hover:bg-ash-200">Ira</button>
+            <button onclick="setQuickKlesha('Miedo a la incertidumbre y perder el control')" class="px-2.5 py-1 bg-ash-100 dark:bg-neutral-800 rounded-lg hover:bg-ash-200">Miedo / Control</button>
+            <button onclick="setQuickKlesha('Sensación de no ser suficiente y compararme')" class="px-2.5 py-1 bg-ash-100 dark:bg-neutral-800 rounded-lg hover:bg-ash-200">Comparación</button>
+            <button onclick="setQuickKlesha('Apego obsesivo a que algo suceda como yo quiero')" class="px-2.5 py-1 bg-ash-100 dark:bg-neutral-800 rounded-lg hover:bg-ash-200">Apego (Rāga)</button>
+          </div>
+
+          <div class="pt-4 flex justify-end">
+            <button onclick="goToAlchemyStep(2)" class="px-6 py-2.5 bg-ash-900 text-white dark:bg-ash-100 dark:text-ash-900 rounded-xl text-xs font-bold uppercase tracking-wider">
+              Avanzar al Testigo →
+            </button>
+          </div>
+        </div>
+
+        <!-- Paso 2 -->
+        <div id="alchemy-step-2" class="space-y-4 hidden">
+          <div class="border-l-4 border-sage-600 pl-4 py-1">
+            <h3 class="font-bold text-base">Paso 2: El Desapego (Vairāgya) y Desidentificación</h3>
+            <p class="text-xs text-ash-500">Reconoce que tú eres quien observa el pensamiento; no eres el pensamiento.</p>
+          </div>
+
+          <div class="p-4 bg-sage-50 dark:bg-sage-950/40 rounded-2xl border border-sage-200 dark:border-sage-900/60 text-sm space-y-2">
+            <p class="italic text-ash-700 dark:text-ash-300">
+              «El cuerpo siente la agitación; la mente produce el relato. Pero Yo Soy el Testigo inmutable (Sākṣin) que ilumina este fenómeno.»
+            </p>
+            <div class="text-xs text-sage-700 dark:text-sage-300 font-medium pt-1">
+              • Respira hondo. Siente la planta de tus pies y relaja la mandíbula.<br>
+              • Mira el pensamiento como una nube pasajera que no tiene sustancia eterna.
+            </div>
+          </div>
+
+          <div class="pt-4 flex justify-between">
+            <button onclick="goToAlchemyStep(1)" class="px-4 py-2 border border-ash-300 dark:border-neutral-700 rounded-xl text-xs uppercase font-semibold">
+              ← Atrás
+            </button>
+            <button onclick="goToAlchemyStep(3)" class="px-6 py-2.5 bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-xl text-xs font-bold uppercase tracking-wider">
+              Activar el Opuesto Elevado →
+            </button>
+          </div>
+        </div>
+
+        <!-- Paso 3 -->
+        <div id="alchemy-step-3" class="space-y-4 hidden">
+          <div class="border-l-4 border-amber-600 pl-4 py-1">
+            <h3 class="font-bold text-base">Paso 3: Pratipakṣa Bhāvanā (Invocar el Polo Luminoso)</h3>
+            <p class="text-xs text-ash-500">¿Qué actitud sabia o emoción opuesta eleva y diluye esta contracción?</p>
+          </div>
+
+          <div id="suggested-alchemy-box" class="p-4 bg-ash-100 dark:bg-neutral-800/70 rounded-2xl text-xs space-y-1">
+            <span class="font-bold uppercase tracking-wider text-terracotta-600 dark:text-terracotta-400">Sugerencia Patañjali:</span>
+            <p id="suggested-alchemy-text" class="text-ash-700 dark:text-ash-300">
+              Si hay hostilidad o juicio, invoca Maitrī (amistad bondadosa) o Karuṇā (compasión por el sufrimiento inconsciente del otro).
+            </p>
+          </div>
+
+          <div>
+            <label class="block text-xs uppercase font-bold text-ash-600 dark:text-ash-400 mb-1">Mi Declaración de Transmutación y Entrega:</label>
+            <textarea id="alchemy-positive-input" rows="3" class="w-full bg-ash-50 dark:bg-neutral-900 border border-ash-200 dark:border-neutral-700 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-sage-600 resize-none" placeholder="Ej: Suelto la necesidad de reconocimiento ajeno. Deseo paz y claridad a esa persona y elijo descansar en la serenidad de mi esfuerzo puro."></textarea>
+          </div>
+
+          <div class="pt-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <button onclick="goToAlchemyStep(2)" class="w-full sm:w-auto px-4 py-2 border border-ash-300 dark:border-neutral-700 rounded-xl text-xs uppercase font-semibold">
+              ← Atrás
+            </button>
+            <div class="flex items-center space-x-2 w-full sm:w-auto">
+              <button onclick="saveAlchemyToJournal()" class="w-full sm:w-auto px-6 py-2.5 bg-sage-700 hover:bg-sage-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider shadow">
+                💾 Guardar en Diario
+              </button>
+              <button onclick="resetAlchemy()" class="px-4 py-2.5 border border-ash-300 dark:border-neutral-700 rounded-xl text-xs uppercase font-semibold">
+                Nuevo Ciclo
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ================= SECCIÓN 3: PRĀṆĀYĀMA (AQUIETAMIENTO) ================= -->
+    <section id="view-pranayama" class="view-content hidden space-y-6">
+      
+      <div class="max-w-2xl mx-auto text-center space-y-2">
+        <span class="text-xs uppercase tracking-widest text-terracotta-600 dark:text-terracotta-500 font-bold">Sūtra 2.49 · Prāṇāyāma</span>
+        <h2 class="text-3xl font-serif font-bold">Aquietar el Prāṇa, Aquietar la Mente</h2>
+        <p class="text-sm text-ash-600 dark:text-ash-400">
+          Al regular la respiración, el velo que cubre la luz interior se disuelve paulatinamente (Sūtra 2.52).
+        </p>
+      </div>
+
+      <div class="max-w-xl mx-auto bg-white dark:bg-[#181816] border border-ash-200 dark:border-neutral-800 rounded-3xl p-6 sm:p-10 text-center shadow-sm relative">
+        
+        <!-- Selector de Patrón de Respiración -->
+        <div class="flex justify-center space-x-2 mb-8">
+          <button onclick="setBreathPattern('box')" id="breath-btn-box" class="px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase border border-terracotta-600 bg-terracotta-50 dark:bg-terracotta-900/30 text-terracotta-700 dark:text-terracotta-300">
+            Sama Vṛtti (4-4-4-4)
+          </button>
+          <button onclick="setBreathPattern('relax')" id="breath-btn-relax" class="px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase border border-ash-300 dark:border-neutral-700 text-ash-600 dark:text-ash-400 hover:bg-ash-100 dark:hover:bg-neutral-800">
+            Serenidad (4-7-8)
+          </button>
+        </div>
+
+        <!-- Orbe Visual de Respiración -->
+        <div class="relative w-64 h-64 mx-auto my-6 flex items-center justify-center">
+          <!-- Círculos de fondo con pulso sutil -->
+          <div class="absolute inset-0 rounded-full border border-dashed border-ash-300 dark:border-neutral-700 animate-spin" style="animation-duration: 40s;"></div>
+          <div id="breath-outer-glow" class="absolute w-48 h-48 rounded-full bg-sage-100/50 dark:bg-sage-900/20 blur-xl"></div>
+          
+          <!-- Círculo que se expande / contrae dinámicamente -->
+          <div id="breath-orb" class="breath-circle w-32 h-32 rounded-full bg-gradient-to-tr from-sage-600 to-terracotta-500 shadow-xl flex items-center justify-center transform scale-100 text-white">
+            <span id="breath-phase-text" class="font-serif text-lg tracking-wider font-semibold">Listo</span>
+          </div>
+        </div>
+
+        <!-- Contador numérico y tiempo -->
+        <div class="space-y-1 mb-8">
+          <div id="breath-counter" class="text-4xl font-serif font-bold text-ash-800 dark:text-ash-100">0</div>
+          <div id="breath-instruction" class="text-xs uppercase tracking-widest text-ash-500 font-semibold">Pulsa Iniciar para armonizar</div>
+          <div id="breath-cycles" class="text-xs text-ash-400 pt-1">Ciclos completados: 0</div>
+        </div>
+
+        <!-- Controles & Sonido de Cuenco Tibetano Nativo -->
+        <div class="flex items-center justify-center space-x-4">
+          <button id="breath-start-btn" onclick="toggleBreathingSession()" class="px-8 py-3 bg-ash-900 text-ash-50 dark:bg-ash-100 dark:text-ash-900 rounded-2xl text-xs font-bold uppercase tracking-widest hover:opacity-90 shadow-md">
+            Iniciar Práctica
+          </button>
+          
+          <button onclick="toggleAudioChime()" id="audio-toggle-btn" class="p-3 border border-ash-200 dark:border-neutral-700 rounded-2xl hover:bg-ash-100 dark:hover:bg-neutral-800 text-ash-600 dark:text-ash-300" title="Sonido de Cuenco Tibetano sintético">
+            <span id="audio-icon">🔔</span>
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ================= SECCIÓN 4: DIARIO DEL TESTIGO (SĀKṢIN) ================= -->
+    <section id="view-saksin" class="view-content hidden space-y-6">
+      
+      <div class="max-w-2xl mx-auto text-center space-y-2">
+        <span class="text-xs uppercase tracking-widest text-terracotta-600 dark:text-terracotta-500 font-bold">Draṣṭuḥ Svarūpe 'Vasthānam</span>
+        <h2 class="text-3xl font-serif font-bold">El Registro del Testigo Silencioso</h2>
+        <p class="text-sm text-ash-600 dark:text-ash-400">
+          Pon por escrito las fluctuaciones de la mente para despojar al ego de su dramatismo y retornar a la paz que ya eres.
+        </p>
+      </div>
+
+      <!-- Formulario para Nueva Entrada -->
+      <div class="bg-white dark:bg-[#181816] border border-ash-200 dark:border-neutral-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-5">
+        <h3 class="font-serif text-xl font-bold border-b border-ash-100 dark:border-neutral-800 pb-3 flex items-center justify-between">
+          <span>Nueva Observación Consciente</span>
+          <span class="text-xs font-sans font-normal text-ash-400" id="current-form-date">Hoy</span>
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs uppercase tracking-wider font-bold text-ash-600 dark:text-ash-400 mb-1">1. Situación Detonante (Lo Externo)</label>
+            <input type="text" id="journal-situation" placeholder="Ej: Discusión laboral / retraso inesperado..." class="w-full bg-ash-50 dark:bg-neutral-900 border border-ash-200 dark:border-neutral-700 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-terracotta-500">
+          </div>
+          <div>
+            <label class="block text-xs uppercase tracking-wider font-bold text-ash-600 dark:text-ash-400 mb-1">Etiqueta del Vṛtti</label>
+            <select id="journal-tag" class="w-full bg-ash-50 dark:bg-neutral-900 border border-ash-200 dark:border-neutral-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-terracotta-500">
+              <option value="Apego (Rāga)">Apego / Deseo aferrado (Rāga)</option>
+              <option value="Aversión (Dveṣa)">Aversión / Rechazo / Ira (Dveṣa)</option>
+              <option value="Miedo (Abhiniveśa)">Miedo / Inseguridad (Abhiniveśa)</option>
+              <option value="Juicio Mental">Juicio / Comparación egóica</option>
+              <option value="Aquietamiento Puro">Aquietamiento / Compasión</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs uppercase tracking-wider font-bold text-ash-600 dark:text-ash-400 mb-1">2. Reacción Mecánica Observada (El Torbellino del Ego)</label>
+          <textarea id="journal-reaction" rows="2" placeholder="¿Qué sensaciones corporales y pensamientos automáticos de defensa o queja se manifestaron?" class="w-full bg-ash-50 dark:bg-neutral-900 border border-ash-200 dark:border-neutral-700 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-terracotta-500 resize-none"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs uppercase tracking-wider font-bold text-sage-700 dark:text-sage-400 mb-1">3. El Espacio del Testigo (Vaciamiento & Entrega a Īśvara)</label>
+          <textarea id="journal-witness" rows="2" placeholder="¿Cómo lo abraza la Consciencia sin juzgarlo? ¿Qué comprensión o entrega suelta este nudo?" class="w-full bg-ash-50 dark:bg-neutral-900 border border-ash-200 dark:border-neutral-700 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-sage-600 resize-none"></textarea>
+        </div>
+
+        <div class="flex justify-end pt-2">
+          <button onclick="saveJournalEntry()" class="px-6 py-2.5 rounded-xl bg-ash-900 text-white dark:bg-ash-100 dark:text-ash-900 text-xs font-bold uppercase tracking-wider shadow hover:opacity-90">
+            Registrar Observación
+          </button>
+        </div>
+      </div>
+
+      <!-- Barra de Filtro y Exportación -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4">
+        <div class="flex items-center space-x-2 w-full sm:w-auto">
+          <input type="text" id="journal-search" oninput="renderJournalEntries()" placeholder="Buscar en reflexiones..." class="bg-white dark:bg-neutral-900 border border-ash-200 dark:border-neutral-700 rounded-xl px-4 py-2 text-xs focus:outline-none w-full sm:w-64">
+        </div>
+        <div class="flex items-center space-x-2 w-full sm:w-auto justify-end">
+          <button onclick="exportJournalJSON()" class="px-3 py-2 border border-ash-300 dark:border-neutral-700 rounded-xl text-xs font-semibold hover:bg-ash-100 dark:hover:bg-neutral-800" title="Descargar como archivo JSON">
+            Exportar JSON
+          </button>
+          <button onclick="exportJournalText()" class="px-3 py-2 border border-ash-300 dark:border-neutral-700 rounded-xl text-xs font-semibold hover:bg-ash-100 dark:hover:bg-neutral-800" title="Descargar como texto legible">
+            Descargar Texto
+          </button>
+        </div>
+      </div>
+
+      <!-- Lista Histórica de Entradas -->
+      <div id="journal-entries-container" class="space-y-4">
+        <!-- Renderizado dinámico -->
+      </div>
+
+    </section>
+
+    <!-- ================= SECCIÓN 5: COMPENDIO DE SŪTRAS ================= -->
+    <section id="view-library" class="view-content hidden space-y-6">
+      
+      <div class="max-w-2xl mx-auto text-center space-y-2">
+        <span class="text-xs uppercase tracking-widest text-terracotta-600 dark:text-terracotta-500 font-bold">Pātañjalayogaśāstra</span>
+        <h2 class="text-3xl font-serif font-bold">Biblioteca de Integración Cotidiana</h2>
+        <p class="text-sm text-ash-600 dark:text-ash-400">
+          Explora los aforismos esenciales organizados por las dimensiones reales de tu día a día.
+        </p>
+      </div>
+
+      <!-- Categorías de Filtrado -->
+      <div class="flex flex-wrap items-center justify-center gap-2 max-w-3xl mx-auto">
+        <button onclick="filterSutras('all')" class="sutra-filter-btn px-3 py-1.5 rounded-full text-xs font-semibold border border-ash-300 dark:border-neutral-700 bg-ash-900 text-white dark:bg-ash-100 dark:text-ash-900" data-cat="all">Todos</button>
+        <button onclick="filterSutras('relaciones')" class="sutra-filter-btn px-3 py-1.5 rounded-full text-xs font-semibold border border-ash-300 dark:border-neutral-700 text-ash-600 dark:text-ash-400 hover:bg-ash-200/50" data-cat="relaciones">Relaciones y Ecuanimidad</button>
+        <button onclick="filterSutras('mente')" class="sutra-filter-btn px-3 py-1.5 rounded-full text-xs font-semibold border border-ash-300 dark:border-neutral-700 text-ash-600 dark:text-ash-400 hover:bg-ash-200/50" data-cat="mente">Alquimia del Pensamiento</button>
+        <button onclick="filterSutras('cuerpo')" class="sutra-filter-btn px-3 py-1.5 rounded-full text-xs font-semibold border border-ash-300 dark:border-neutral-700 text-ash-600 dark:text-ash-400 hover:bg-ash-200/50" data-cat="cuerpo">Cuerpo y Postura Firme</button>
+        <button onclick="filterSutras('accion')" class="sutra-filter-btn px-3 py-1.5 rounded-full text-xs font-semibold border border-ash-300 dark:border-neutral-700 text-ash-600 dark:text-ash-400 hover:bg-ash-200/50" data-cat="accion">Kriyā Yoga & Entrega</button>
+        <button onclick="filterSutras('presencia')" class="sutra-filter-btn px-3 py-1.5 rounded-full text-xs font-semibold border border-ash-300 dark:border-neutral-700 text-ash-600 dark:text-ash-400 hover:bg-ash-200/50" data-cat="presencia">Aquietamiento Puro</button>
+      </div>
+
+      <!-- Buscador -->
+      <div class="max-w-md mx-auto">
+        <input type="text" id="sutra-search-box" oninput="searchSutras()" placeholder="Buscar por sánscrito, traducción o práctica..." class="w-full bg-white dark:bg-neutral-900 border border-ash-200 dark:border-neutral-800 rounded-2xl px-4 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-terracotta-500">
+      </div>
+
+      <!-- Parrilla de Sutras -->
+      <div id="sutras-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-4">
+        <!-- Relleno por JavaScript -->
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ================= MODAL: REFLEXIÓN RÁPIDA ================= -->
+  <div id="modal-reflection" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm hidden">
+    <div class="bg-white dark:bg-[#181816] border border-ash-200 dark:border-neutral-800 w-full max-w-lg rounded-3xl p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-ash-100 dark:border-neutral-800 pb-3">
+        <h3 class="font-serif text-lg font-bold">Anotar en el Espejo del Testigo</h3>
+        <button onclick="closeReflectionModal()" class="text-ash-400 hover:text-ash-600 text-xl font-bold">&times;</button>
+      </div>
+      <p class="text-xs text-ash-500" id="modal-sutra-context">
+        Reflexión vinculada al aforismo activo.
+      </p>
+      <textarea id="modal-quick-text" rows="4" class="w-full bg-ash-50 dark:bg-neutral-900 border border-ash-200 dark:border-neutral-700 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-terracotta-500 resize-none" placeholder="¿Cómo sientes este aforismo en tu experiencia inmediata?"></textarea>
+      
+      <div class="flex justify-end space-x-2 pt-2">
+        <button onclick="closeReflectionModal()" class="px-4 py-2 border border-ash-300 dark:border-neutral-700 rounded-xl text-xs uppercase font-semibold">Cancelar</button>
+        <button onclick="saveModalReflection()" class="px-5 py-2 bg-terracotta-600 text-white rounded-xl text-xs font-bold uppercase tracking-wider">Guardar Reflexión</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PIE DE PÁGINA ================= -->
+  <footer class="border-t border-ash-200/60 dark:border-neutral-800/80 mt-12 py-8 text-center text-xs text-ash-500 dark:text-ash-400">
+    <div class="max-w-4xl mx-auto px-4 space-y-2">
+      <div class="font-serif italic text-sm text-ash-700 dark:text-ash-300">
+        «tadā draṣṭuḥ svarūpe 'vasthānam» — Entonces el Testigo reposa en su Realidad Pura (1.3)
+      </div>
+      <p>Diseñado para la liberación interior constante. Ejecución 100% nativa en el navegador, sin rastreadores ni dependencias externas.</p>
+    </div>
+  </footer>
+
+  <!-- ================= SCRIPT: LÓGICA COMPLETA DE LA APLICACIÓN ================= -->
+  <script>
+    /* =====================================================================
+       BASE DE DATOS: AFORISMOS FUNDAMENTALES Y GUÍA DE ENCARNACIÓN
+       ===================================================================== */
+    const SUTRAS_DATA = [
+      {
+        id: "1.2",
+        pada: "Samādhi Pāda",
+        category: "presencia",
+        sanskrit: "yogaś citta-vṛtti-nirodhaḥ",
+        phonetic: "yoga-sh chitta-vritti-nirodhah",
+        translation: "El Yoga es el cese del torbellino identitario y las fluctuaciones mentales.",
+        essence: "Tus pensamientos, ansiedades y juicios son estados transitorios de la mente (citta), no tu verdadero Yo. Cuando dejas de identificarte y luchar contra cada ola, el lago de la consciencia recupera su transparencia cristalina.",
+        action: "Hoy, ante cualquier prisa o impulso reactivo, haz 3 respiraciones profundas y di internamente: 'Esto es solo una fluctuación pasajera; yo soy el espacio sereno que la observa'."
+      },
+      {
+        id: "1.3",
+        pada: "Samādhi Pāda",
+        category: "presencia",
+        sanskrit: "tadā draṣṭuḥ svarūpe 'vasthānam",
+        phonetic: "tadaa drashtuh sva-ruupe 'vasthaanam",
+        translation: "Entonces el Testigo (el Vidente) descansa en su propia naturaleza esencial.",
+        essence: "Al acallar el parloteo egóico, descubres que no necesitabas arreglar nada para estar en paz. Dios o la Presencia no es un objeto lejano: es el fondo silencioso y despierto de tu propio existir.",
+        action: "Cierra los ojos durante 60 segundos. Nota quién es el que se da cuenta de los sonidos a tu alrededor. Permanece en ese 'Darse Cuenta' puro sin nombrarlo."
+      },
+      {
+        id: "1.12",
+        pada: "Samādhi Pāda",
+        category: "accion",
+        sanskrit: "abhyāsa-vairāgyābhyāṁ tan-nirodhaḥ",
+        phonetic: "abhyaasa-vairaagyaabhyaam tan-nirodhah",
+        translation: "Esa quietud se consolida mediante la práctica constante y el desapego radical.",
+        essence: "El camino tiene dos alas: Abhyāsa (el esfuerzo continuo por reposar en la presencia) y Vairāgya (soltar la sed de controlar los resultados o aferrarse al placer pasajero). Una sin la otra desequilibra el vuelo.",
+        action: "Dedica hoy atención plena a una tarea humilde (lavar platos, caminar o escribir un correo) sin esperar recompensa, aprobación ni aplauso exterior."
+      },
+      {
+        id: "1.33",
+        pada: "Samādhi Pāda",
+        category: "relaciones",
+        sanskrit: "maitrī-karuṇā-muditopekṣāṇāṁ sukha-duḥkha-puṇyāpuṇya-viṣayāṇāṁ bhāvanātaś citta-prasādanam",
+        phonetic: "maitrii-karunaa-muditopekshaanaam sukha-duhkha-punyaapunya-vishayaanaam bhaavanaatash chitta-prasaadanam",
+        translation: "La mente se apacigua cultivando benevolencia hacia los alegres, compasión hacia los afligidos, gozo hacia los virtuosos y serena ecuanimidad ante los difíciles.",
+        essence: "La medicina universal para las relaciones humanas: no competir con quien brilla, no juzgar al que cae, alegrarse del bien ajeno y mantener la distancia pacífica ante la insensatez ajena sin odio en el pecho.",
+        action: "Detecta hoy si surge envidia o irritación ante alguien. Aplica al instante la llave de Patañjali: deséale en silencio paz y liberación de su propia ignorancia."
+      },
+      {
+        id: "2.1",
+        pada: "Sādhana Pāda",
+        category: "accion",
+        sanskrit: "tapaḥ-svādhyāyeśvara-praṇidhānāni kriyā-yogaḥ",
+        phonetic: "tapah-svaadhyaayeshvara-pranidhaanaani kriyaa-yogah",
+        translation: "El yoga de la acción consciente se compone de disciplina depuradora, autoindagación y entrega a la Consciencia Divina.",
+        essence: "Kriyā Yoga es la espiritualidad aterrizada: Tapas (voluntad que quema la pereza), Svādhyāya (estudio honesto de las trampas de tu ego) e Īśvara Praṇidhāna (soltar los frutos al Gran Orden).",
+        action: "Elige una pequeña incomodidad voluntaria hoy (ej: no revisar el móvil la primera media hora del día) como ofrenda de claridad interior."
+      },
+      {
+        id: "2.33",
+        pada: "Sādhana Pāda",
+        category: "mente",
+        sanskrit: "vitarka-bādhane pratipakṣa-bhāvanam",
+        phonetic: "vitarka-baadhane pratipaksha-bhaavanam",
+        translation: "Ante la intrusión de pensamientos oscuros o reactivos, se debe cultivar activamente su cualidad opuesta.",
+        essence: "Patañjali no propone reprimir la sombra, sino transmutar su polaridad. La mente no puede sostener dos frecuencias incompatibles simultáneamente: el amor consciente desmantela el veneno del rencor.",
+        action: "Si te sorprendes criticando interiormente a un colega o familiar, busca intencionadamente una virtud real que posea y reconócela en tu fuero interno."
+      },
+      {
+        id: "2.46",
+        pada: "Sādhana Pāda",
+        category: "cuerpo",
+        sanskrit: "sthira-sukham āsanam",
+        phonetic: "sthira-sukham aasanam",
+        translation: "La postura corporal y vital ha de ser firme a la vez que relajada y amable.",
+        essence: "Āsana no es solo gimnasia sobre una esterilla; es cómo te plantas ante el mundo. Rigidez sin ternura quiebra el cuerpo; laxitud sin estructura dispersa el alma. Busca la estabilidad sin tensión.",
+        action: "Revisa tu postura en tu silla ahora mismo: alarga la columna como si tocaras el cielo, pero suelta los hombros y suaviza el rostro y el vientre."
+      },
+      {
+        id: "2.45",
+        pada: "Sādhana Pāda",
+        category: "accion",
+        sanskrit: "samādhi-siddhir īśvara-praṇidhānāt",
+        phonetic: "samaadhi-siddhir eeshvara-pranidhaanaat",
+        translation: "La plenitud y absorción suprema se alcanza mediante la rendición incondicional a la Consciencia Cósmica.",
+        essence: "El ego cree que debe sostener el universo con su preocupación. Cuando te rindes y reconoces que la Inteligencia Universal late en tu propio corazón, el esfuerzo cesa y florece Samādhi.",
+        action: "Di mentalmente ante una situación difícil que te obsesiona: 'Te entrego el desenlace. No soy yo quien gobierna la vida, que opere a través de mí lo que sea más sabio'."
+      },
+      {
+        id: "1.14",
+        pada: "Samādhi Pāda",
+        category: "accion",
+        sanskrit: "sa tu dīrgha-kāla-nairantarya-satkārāsevito dṛḍha-bhūmiḥ",
+        phonetic: "sa tu deergha-kaala-nairantarya-satkaaraasevito dridha-bhuumih",
+        translation: "La práctica asienta cimientos firmes cuando se cultiva por largo tiempo, sin interrupción y con devota reverencia.",
+        essence: "La maduración espiritual no ocurre por 'arrebatos místicos' esporádicos, sino por la humilde fidelidad cotidiana realizada con amor y respeto sagrado.",
+        action: "Cumple hoy tu compromiso de serenidad con respeto, incluso si tu mente te dice que hoy 'no tienes ganas' o que 'no sirve de nada'."
+      },
+      {
+        id: "2.28",
+        pada: "Sādhana Pāda",
+        category: "presencia",
+        sanskrit: "yogāṅgānuṣṭhānād aśuddhi-kṣaye jñāna-dīptir ā viveka-khyāteḥ",
+        phonetic: "yogaanga-anushthaanaad ashuddhi-kshaye jnyaana-deeptir aa viveka-khyaateh",
+        translation: "Al encarnar las extremidades del Yoga, las impurezas se extinguen y resplandece la luz del discernimiento lúcido.",
+        essence: "El discernimiento (Viveka) es la facultad de distinguir entre lo que es eterno y lo que es efímero. No tienes que crear la luz, solo limpiar el cristal empañado del egoísmo.",
+        action: "Pregúntate antes de reaccionar: '¿Esto beneficia a mi Ser real o solo alimenta el capricho efímero de mi imagen personal?'"
+      }
+    ];
+
+    /* =====================================================================
+       ESTADO Y PERSISTENCIA (LOCALSTORAGE)
+       ===================================================================== */
+    const STORAGE_KEY_JOURNAL = 'patanjali_journal_v1';
+    const STORAGE_KEY_STREAK = 'patanjali_streak_v1';
+    const STORAGE_KEY_ACTIVE_SUTRA = 'patanjali_active_sutra_v1';
+    const STORAGE_KEY_THEME = 'patanjali_theme_v1';
+
+    let currentSutra = SUTRAS_DATA[0];
+    let journalEntries = [];
+    let practiceStreak = { count: 0, lastDate: null };
+    let currentCategoryFilter = 'all';
+
+    // Cargar datos al arrancar
+    function initApp() {
+      // Tema (oscuro / claro)
+      const savedTheme = localStorage.getItem(STORAGE_KEY_THEME);
+      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+        updateThemeIcon(true);
+      } else {
+        document.documentElement.classList.remove('dark');
+        updateThemeIcon(false);
+      }
+
+      // Racha
+      const savedStreak = localStorage.getItem(STORAGE_KEY_STREAK);
+      if (savedStreak) {
+        try { practiceStreak = JSON.parse(savedStreak); } catch (e) { console.error(e); }
+      }
+      updateStreakUI();
+
+      // Diario
+      const savedJournal = localStorage.getItem(STORAGE_KEY_JOURNAL);
+      if (savedJournal) {
+        try { journalEntries = JSON.parse(savedJournal); } catch (e) { journalEntries = []; }
+      }
+      renderJournalEntries();
+
+      // Aforismo activo (o aleatorio según el día)
+      const savedSutraId = localStorage.getItem(STORAGE_KEY_ACTIVE_SUTRA);
+      if (savedSutraId) {
+        const found = SUTRAS_DATA.find(s => s.id === savedSutraId);
+        if (found) currentSutra = found;
+      } else {
+        // Seleccionar según el día del año
+        const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+        currentSutra = SUTRAS_DATA[dayOfYear % SUTRAS_DATA.length];
+      }
+
+      renderCurrentSutra();
+      renderSutrasLibrary();
+
+      // Fecha en formulario del testigo
+      const now = new Date();
+      document.getElementById('current-form-date').textContent = now.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+    }
+
+    /* =====================================================================
+       NAVEGACIÓN ENTRE PESTAÑAS
+       ===================================================================== */
+    function switchTab(tabId) {
+      document.querySelectorAll('.view-content').forEach(view => view.classList.add('hidden'));
+      const activeView = document.getElementById(`view-${tabId}`);
+      if (activeView) activeView.classList.remove('hidden');
+
+      // Actualizar botones de navegación desktop
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('text-terracotta-600', 'dark:text-terracotta-500', 'font-bold', 'bg-ash-100', 'dark:bg-neutral-800/80');
+        btn.classList.add('text-ash-600', 'dark:text-ash-300');
+      });
+      const activeNav = document.getElementById(`nav-${tabId}`);
+      if (activeNav) {
+        activeNav.classList.add('text-terracotta-600', 'dark:text-terracotta-500', 'font-bold', 'bg-ash-100', 'dark:bg-neutral-800/80');
+        activeNav.classList.remove('text-ash-600', 'dark:text-ash-300');
+      }
+
+      // Actualizar botones de navegación móvil
+      document.querySelectorAll('[id^="mob-nav-"]').forEach(btn => {
+        btn.classList.remove('bg-ash-200', 'dark:bg-neutral-800', 'text-terracotta-600', 'dark:text-terracotta-400');
+      });
+      const activeMobNav = document.getElementById(`mob-nav-${tabId}`);
+      if (activeMobNav) {
+        activeMobNav.classList.add('bg-ash-200', 'dark:bg-neutral-800', 'text-terracotta-600', 'dark:text-terracotta-400');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* =====================================================================
+       CONTROL DEL MODO OSCURO
+       ===================================================================== */
+    function toggleDarkMode() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem(STORAGE_KEY_THEME, isDark ? 'dark' : 'light');
+      updateThemeIcon(isDark);
+      showToast(isDark ? 'Modo noche activo · Recogimiento interior' : 'Modo luz activo · Claridad matinal');
+    }
+
+    function updateThemeIcon(isDark) {
+      const icon = document.getElementById('theme-icon');
+      if (isDark) {
+        icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />`;
+      } else {
+        icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>`;
+      }
+    }
+
+    /* =====================================================================
+       NOTIFICACIONES TOAST (SIN ALERTS)
+       ===================================================================== */
+    let toastTimeout;
+    function showToast(msg, icon = '🪔') {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').textContent = msg;
+      document.getElementById('toast-icon').textContent = icon;
+
+      toast.classList.remove('opacity-0', 'translate-y-20', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-20', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 3500);
+    }
+
+    /* =====================================================================
+       SŪTRA DIARIO & ENCARNACIÓN
+       ===================================================================== */
+    function renderCurrentSutra() {
+      document.getElementById('daily-sutra-number').textContent = `Sūtra ${currentSutra.id}`;
+      document.getElementById('daily-sutra-pada').textContent = currentSutra.pada;
+      document.getElementById('daily-sutra-sanskrit').textContent = currentSutra.sanskrit;
+      document.getElementById('daily-sutra-phonetic').textContent = `[ ${currentSutra.phonetic} ]`;
+      document.getElementById('daily-sutra-translation').textContent = `«${currentSutra.translation}»`;
+      document.getElementById('daily-sutra-essence').textContent = currentSutra.essence;
+      document.getElementById('daily-sutra-action').textContent = currentSutra.action;
+
+      localStorage.setItem(STORAGE_KEY_ACTIVE_SUTRA, currentSutra.id);
+      checkIfPracticedToday();
+    }
+
+    function chooseRandomSutra() {
+      const others = SUTRAS_DATA.filter(s => s.id !== currentSutra.id);
+      currentSutra = others[Math.floor(Math.random() * others.length)];
+      renderCurrentSutra();
+      showToast(`Nuevo aforismo evocado: Sūtra ${currentSutra.id}`);
+    }
+
+    function setActiveSutraById(id) {
+      const found = SUTRAS_DATA.find(s => s.id === id);
+      if (found) {
+        currentSutra = found;
+        renderCurrentSutra();
+        switchTab('daily');
+        showToast(`Aforismo fijado para encarnar hoy: ${id}`);
+      }
+    }
+
+    function checkIfPracticedToday() {
+      const todayStr = new Date().toISOString().split('T')[0];
+      const isPracticed = practiceStreak.lastDate === todayStr;
+      const btn = document.getElementById('btn-mark-practiced');
+      const txt = document.getElementById('btn-practiced-text');
+
+      if (isPracticed) {
+        btn.classList.remove('bg-terracotta-600', 'hover:bg-terracotta-700');
+        btn.classList.add('bg-sage-700', 'hover:bg-sage-800');
+        txt.textContent = 'Vivido y honrado hoy ✓';
+      } else {
+        btn.classList.add('bg-terracotta-600', 'hover:bg-terracotta-700');
+        btn.classList.remove('bg-sage-700', 'hover:bg-sage-800');
+        txt.textContent = 'Marcar como vivido hoy';
+      }
+    }
+
+    function markPracticedToday() {
+      const todayStr = new Date().toISOString().split('T')[0];
+      
+      if (practiceStreak.lastDate === todayStr) {
+        showToast('Ya has sellado tu práctica de hoy con presencia.', '🌸');
+        return;
+      }
+
+      // Comprobar si fue consecutivo (ayer)
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+      if (practiceStreak.lastDate === yesterdayStr) {
+        practiceStreak.count += 1;
+      } else {
+        practiceStreak.count = 1;
+      }
+
+      practiceStreak.lastDate = todayStr;
+      localStorage.setItem(STORAGE_KEY_STREAK, JSON.stringify(practiceStreak));
+      
+      updateStreakUI();
+      checkIfPracticedToday();
+      playTibetanBowl(432); // Toque sagrado de campana
+      showToast('Práctica registrada. Que la luz del Testigo guíe tus pasos.', '🙏');
+    }
+
+    function updateStreakUI() {
+      const el = document.getElementById('streak-counter');
+      const count = practiceStreak.count || 0;
+      el.textContent = `${count} ${count === 1 ? 'día' : 'días'}`;
+    }
+
+    function shareSutraText() {
+      const textToCopy = `*Sūtra ${currentSutra.id} de Patañjali*\n"${currentSutra.sanskrit}"\n\nSignificado: ${currentSutra.translation}\n\nPráctica de Encarnación:\n${currentSutra.action}\n\n— SŪTRA: El Camino del Testigo`;
+      
+      // Copia segura compatible con navegadores e iFrames
+      copyToClipboardText(textToCopy);
+      showToast('Aforismo copiado al portapapeles para compartir.', '📋');
+    }
+
+    function copyToClipboardText(str) {
+      const tempTextarea = document.createElement('textarea');
+      tempTextarea.value = str;
+      tempTextarea.style.position = 'fixed';
+      tempTextarea.style.left = '-9999px';
+      document.body.appendChild(tempTextarea);
+      tempTextarea.select();
+      try {
+        document.execCommand('copy');
+      } catch (err) {
+        console.error('Error al copiar texto', err);
+      }
+      document.body.removeChild(tempTextarea);
+    }
+
+    /* =====================================================================
+       LABORATORIO PRATIPAKṢA BHĀVANĀ (SUTRA 2.33)
+       ===================================================================== */
+    let currentAlchemyStep = 1;
+
+    function goToAlchemyStep(step) {
+      currentAlchemyStep = step;
+      document.getElementById('alchemy-step-1').classList.toggle('hidden', step !== 1);
+      document.getElementById('alchemy-step-2').classList.toggle('hidden', step !== 2);
+      document.getElementById('alchemy-step-3').classList.toggle('hidden', step !== 3);
+
+      for (let i = 1; i <= 3; i++) {
+        const ind = document.getElementById(`step-indicator-${i}`);
+        if (i <= step) {
+          ind.classList.remove('bg-ash-200', 'dark:bg-neutral-800', 'text-ash-600', 'dark:text-ash-300');
+          ind.classList.add('bg-terracotta-600', 'text-white');
+        } else {
+          ind.classList.add('bg-ash-200', 'dark:bg-neutral-800', 'text-ash-600', 'dark:text-ash-300');
+          ind.classList.remove('bg-terracotta-600', 'text-white');
+        }
+      }
+
+      if (step === 3) {
+        updateSuggestedOpposite();
+      }
+    }
+
+    function setQuickKlesha(text) {
+      document.getElementById('alchemy-negative-input').value = text;
+    }
+
+    function updateSuggestedOpposite() {
+      const negative = document.getElementById('alchemy-negative-input').value.toLowerCase();
+      const suggestionEl = document.getElementById('suggested-alchemy-text');
+
+      if (negative.includes('ira') || negative.includes('odio') || negative.includes('resentimiento') || negative.includes('rabia')) {
+        suggestionEl.textContent = "Para la ira o la hostilidad, Patañjali recomienda Maitrī (benevolencia fraterna): recuerda que quien hiere está preso de su propio dolor e ignorancia (Avidyā).";
+      } else if (negative.includes('miedo') || negative.includes('control') || negative.includes('inseguridad')) {
+        suggestionEl.textContent = "Para el miedo y el afán de control, invoca Īśvara Praṇidhāna: ríndete a la inteligencia del momento presente; no tienes que sostener el universo tú solo.";
+      } else if (negative.includes('compar') || negative.includes('suficiente') || negative.includes('envidia')) {
+        suggestionEl.textContent = "Para la comparación o envidia, activa Muditā (gozo empático por el bien de otros): la abundancia del Ser es infinita; la dicha de otro no disminuye tu propia luz.";
+      } else if (negative.includes('apego') || negative.includes('deseo')) {
+        suggestionEl.textContent = "Para el apego posesivo (Rāga), cultiva Vairāgya (desapasionamiento): disfruta de las cosas como quien contempla un atardecer, sin intentar encerrar el sol en una jaula.";
+      } else {
+        suggestionEl.textContent = "Invoca la presencia del Testigo Silencioso: da un paso atrás respecto al torbellino y elige una respuesta basada en la comprensión serena.";
+      }
+    }
+
+    function saveAlchemyToJournal() {
+      const negative = document.getElementById('alchemy-negative-input').value.trim();
+      const positive = document.getElementById('alchemy-positive-input').value.trim();
+
+      if (!negative) {
+        showToast('Por favor describe primero el pensamiento aflictivo.', '⚠️');
+        goToAlchemyStep(1);
+        return;
+      }
+
+      const newEntry = {
+        id: Date.now().toString(),
+        date: new Date().toISOString(),
+        situation: "Pratipakṣa Bhāvanā (Alquimia Directa)",
+        tag: "Alquimia Mental (2.33)",
+        reaction: negative,
+        witness: positive || "He observado el pensamiento perturbador como un fenómeno ajeno a mi Ser y he elegido descansar en la ecuanimidad.",
+        sutraRef: "Sūtra 2.33"
+      };
+
+      journalEntries.unshift(newEntry);
+      localStorage.setItem(STORAGE_KEY_JOURNAL, JSON.stringify(journalEntries));
+      renderJournalEntries();
+      playTibetanBowl(528); // Tono de transformación armónica
+      showToast('Transmutación inmortalizada en el Diario del Testigo.', '🌿');
+      resetAlchemy();
+      switchTab('saksin');
+    }
+
+    function resetAlchemy() {
+      document.getElementById('alchemy-negative-input').value = '';
+      document.getElementById('alchemy-positive-input').value = '';
+      goToAlchemyStep(1);
+    }
+
+    /* =====================================================================
+       PRĀṆĀYĀMA (RESPIRACIÓN CON SÍNTESIS DE AUDIO WEB PURA)
+       ===================================================================== */
+    let breathingInterval = null;
+    let isBreathingActive = false;
+    let currentBreathMode = 'box'; // 'box' (4-4-4-4) o 'relax' (4-7-8)
+    let breathTime = 0;
+    let cycleCount = 0;
+    let audioEnabled = true;
+
+    // Patrones en segundos: [inhalar, retener, exhalar, retener_vacio]
+    const BREATH_PATTERNS = {
+      box: { in: 4, hold1: 4, out: 4, hold2: 4, name: "Sama Vṛtti" },
+      relax: { in: 4, hold1: 7, out: 8, hold2: 0, name: "Serenidad 4-7-8" }
+    };
+
+    function setBreathPattern(pattern) {
+      if (isBreathingActive) toggleBreathingSession();
+      currentBreathMode = pattern;
+
+      const btnBox = document.getElementById('breath-btn-box');
+      const btnRelax = document.getElementById('breath-btn-relax');
+
+      if (pattern === 'box') {
+        btnBox.className = "px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase border border-terracotta-600 bg-terracotta-50 dark:bg-terracotta-900/30 text-terracotta-700 dark:text-terracotta-300";
+        btnRelax.className = "px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase border border-ash-300 dark:border-neutral-700 text-ash-600 dark:text-ash-400 hover:bg-ash-100 dark:hover:bg-neutral-800";
+      } else {
+        btnRelax.className = "px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase border border-terracotta-600 bg-terracotta-50 dark:bg-terracotta-900/30 text-terracotta-700 dark:text-terracotta-300";
+        btnBox.className = "px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase border border-ash-300 dark:border-neutral-700 text-ash-600 dark:text-ash-400 hover:bg-ash-100 dark:hover:bg-neutral-800";
+      }
+    }
+
+    function toggleBreathingSession() {
+      const btn = document.getElementById('breath-start-btn');
+      if (isBreathingActive) {
+        // Detener
+        clearInterval(breathingInterval);
+        isBreathingActive = false;
+        btn.textContent = 'Iniciar Práctica';
+        btn.classList.remove('bg-red-700', 'text-white');
+        btn.classList.add('bg-ash-900', 'text-ash-50', 'dark:bg-ash-100', 'dark:text-ash-900');
+        resetBreathVisuals();
+      } else {
+        // Iniciar
+        isBreathingActive = true;
+        btn.textContent = 'Aquietar / Detener';
+        btn.classList.add('bg-red-700', 'text-white');
+        btn.classList.remove('bg-ash-900', 'dark:bg-ash-100');
+        startBreathingCycle();
+      }
+    }
+
+    function resetBreathVisuals() {
+      const orb = document.getElementById('breath-orb');
+      orb.style.transform = 'scale(1)';
+      document.getElementById('breath-phase-text').textContent = 'Listo';
+      document.getElementById('breath-instruction').textContent = 'Pulsa Iniciar para armonizar';
+      document.getElementById('breath-counter').textContent = '0';
+    }
+
+    function startBreathingCycle() {
+      const cfg = BREATH_PATTERNS[currentBreathMode];
+      const totalCycleTime = cfg.in + cfg.hold1 + cfg.out + cfg.hold2;
+      let secondInCycle = 0;
+
+      // Sonido de bienvenida
+      playTibetanBowl(300);
+
+      const step = () => {
+        const sec = secondInCycle % totalCycleTime;
+        const orb = document.getElementById('breath-orb');
+        const phaseTxt = document.getElementById('breath-phase-text');
+        const instr = document.getElementById('breath-instruction');
+        const count = document.getElementById('breath-counter');
+
+        if (sec < cfg.in) {
+          // Fase Inhalación
+          const p = sec + 1;
+          phaseTxt.textContent = "Inhala";
+          instr.textContent = "Recibe el Prāṇa vital en el templo del cuerpo";
+          count.textContent = p;
+          orb.style.transition = `transform ${cfg.in}s cubic-bezier(0.4, 0, 0.2, 1)`;
+          orb.style.transform = 'scale(1.5)';
+          if (sec === 0) playTibetanBowl(440);
+        } else if (sec < cfg.in + cfg.hold1) {
+          // Fase Retención Lleno
+          const p = (sec - cfg.in) + 1;
+          phaseTxt.textContent = "Retén";
+          instr.textContent = "Descansa en la plenitud inmóvil del Ser";
+          count.textContent = p;
+          orb.style.transition = `transform 0.5s ease`;
+          orb.style.transform = 'scale(1.5)';
+          if (sec === cfg.in) playTibetanBowl(554);
+        } else if (sec < cfg.in + cfg.hold1 + cfg.out) {
+          // Fase Exhalación
+          const p = (sec - cfg.in - cfg.hold1) + 1;
+          phaseTxt.textContent = "Exhala";
+          instr.textContent = "Suelta todo control; vacía para que Dios habite en ti";
+          count.textContent = p;
+          orb.style.transition = `transform ${cfg.out}s cubic-bezier(0.4, 0, 0.2, 1)`;
+          orb.style.transform = 'scale(0.85)';
+          if (sec === cfg.in + cfg.hold1) playTibetanBowl(330);
+        } else {
+          // Fase Retención Vacío
+          const p = (sec - cfg.in - cfg.hold1 - cfg.out) + 1;
+          phaseTxt.textContent = "Vacío";
+          instr.textContent = "En la nada surge el origen de todo";
+          count.textContent = p;
+          orb.style.transition = `transform 0.5s ease`;
+          orb.style.transform = 'scale(0.85)';
+          if (sec === cfg.in + cfg.hold1 + cfg.out) playTibetanBowl(220);
+        }
+
+        secondInCycle++;
+        if (secondInCycle % totalCycleTime === 0) {
+          cycleCount++;
+          document.getElementById('breath-cycles').textContent = `Ciclos completados: ${cycleCount}`;
+        }
+      };
+
+      step();
+      breathingInterval = setInterval(step, 1000);
+    }
+
+    /* =====================================================================
+       SINTETIZADOR DE CUENCO TIBETANO (WEB AUDIO API - SIN ARCHIVOS EXTERNOS)
+       ===================================================================== */
+    let audioCtx = null;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function toggleAudioChime() {
+      audioEnabled = !audioEnabled;
+      document.getElementById('audio-icon').textContent = audioEnabled ? '🔔' : '🔕';
+      showToast(audioEnabled ? 'Sonido de cuenco activado' : 'Sonido silenciado');
+    }
+
+    function playTibetanBowl(fundamental = 216) {
+      if (!audioEnabled) return;
+      try {
+        initAudio();
+        const now = audioCtx.currentTime;
+
+        // Frecuencias armónicas de un cuenco tibetano clásico
+        const partials = [
+          { freq: fundamental * 1.0, gain: 0.35, decay: 4.5 },
+          { freq: fundamental * 2.76, gain: 0.18, decay: 3.2 },
+          { freq: fundamental * 5.40, gain: 0.08, decay: 1.8 }
+        ];
+
+        partials.forEach(p => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+
+          osc.type = 'sine';
+          // Modulación leve para imitar el batimiento orgánico del metal
+          osc.frequency.setValueAtTime(p.freq, now);
+          osc.frequency.linearRampToValueAtTime(p.freq + 0.4, now + p.decay);
+
+          gain.gain.setValueAtTime(0, now);
+          gain.gain.linearRampToValueAtTime(p.gain, now + 0.04);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + p.decay);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+
+          osc.start(now);
+          osc.stop(now + p.decay);
+        });
+      } catch (e) {
+        console.warn('Audio no inicializado o restringido por navegador:', e);
+      }
+    }
+
+    /* =====================================================================
+       DIARIO DEL TESTIGO (SĀKṢIN / EL TESTIGO INMUTABLE)
+       ===================================================================== */
+    function saveJournalEntry() {
+      const situation = document.getElementById('journal-situation').value.trim();
+      const reaction = document.getElementById('journal-reaction').value.trim();
+      const witness = document.getElementById('journal-witness').value.trim();
+      const tag = document.getElementById('journal-tag').value;
+
+      if (!situation && !reaction && !witness) {
+        showToast('Por favor escribe al menos una observación.', '⚠️');
+        return;
+      }
+
+      const entry = {
+        id: Date.now().toString(),
+        date: new Date().toISOString(),
+        situation: situation || 'Momento cotidiano de indagación',
+        tag: tag,
+        reaction: reaction || 'Mente en silencio / sin conflicto aparente',
+        witness: witness || 'Descanso en la pura mirada neutral que atestigua todo con amor.',
+        sutraRef: currentSutra ? `Sūtra ${currentSutra.id}` : ''
+      };
+
+      journalEntries.unshift(entry);
+      localStorage.setItem(STORAGE_KEY_JOURNAL, JSON.stringify(journalEntries));
+
+      // Limpiar campos
+      document.getElementById('journal-situation').value = '';
+      document.getElementById('journal-reaction').value = '';
+      document.getElementById('journal-witness').value = '';
+
+      renderJournalEntries();
+      playTibetanBowl(432);
+      showToast('Observación guardada en el Registro del Testigo.', '📖');
+    }
+
+    function renderJournalEntries() {
+      const container = document.getElementById('journal-entries-container');
+      const search = (document.getElementById('journal-search')?.value || '').toLowerCase();
+
+      const filtered = journalEntries.filter(entry => {
+        return (
+          entry.situation.toLowerCase().includes(search) ||
+          entry.reaction.toLowerCase().includes(search) ||
+          entry.witness.toLowerCase().includes(search) ||
+          entry.tag.toLowerCase().includes(search)
+        );
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 border border-dashed border-ash-200 dark:border-neutral-800 rounded-3xl p-8">
+            <div class="text-3xl mb-2 text-ash-400">🪞</div>
+            <h4 class="font-serif text-lg font-bold">El Espejo está Limpio</h4>
+            <p class="text-xs text-ash-500 max-w-sm mx-auto mt-1">
+              Aún no hay registros guardados. Utiliza el formulario superior o el Laboratorio Pratipakṣa para asentar tus descubrimientos lúcidos.
+            </p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(entry => {
+        const d = new Date(entry.date);
+        const dateStr = d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+        return `
+          <div class="bg-white dark:bg-[#181816] border border-ash-200 dark:border-neutral-800 rounded-2xl p-5 shadow-sm space-y-3 relative group">
+            
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-ash-100 dark:border-neutral-800/80 pb-2">
+              <div class="flex items-center space-x-2">
+                <span class="text-xs px-2.5 py-0.5 rounded-full bg-ash-100 dark:bg-neutral-800 text-ash-700 dark:text-ash-300 font-semibold">${entry.tag}</span>
+                ${entry.sutraRef ? `<span class="text-[11px] font-mono text-terracotta-600 dark:text-terracotta-400">${entry.sutraRef}</span>` : ''}
+              </div>
+              <div class="flex items-center space-x-2 text-xs text-ash-400">
+                <span>${dateStr}</span>
+                <button onclick="deleteJournalEntry('${entry.id}')" class="text-ash-400 hover:text-red-500 p-1" title="Eliminar entrada">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="text-sm font-semibold text-ash-900 dark:text-ash-100">
+              <span class="text-xs uppercase tracking-wider text-ash-400 font-bold block">Situación:</span>
+              ${escapeHtml(entry.situation)}
+            </div>
+
+            <div class="text-xs text-ash-600 dark:text-ash-300 bg-ash-50 dark:bg-neutral-900/50 p-3 rounded-xl border border-ash-200/40 dark:border-neutral-800">
+              <span class="font-bold text-terracotta-600 dark:text-terracotta-400 block mb-0.5">Fluctuación del Ego observada:</span>
+              ${escapeHtml(entry.reaction)}
+            </div>
+
+            <div class="text-xs text-sage-800 dark:text-sage-200 bg-sage-50/70 dark:bg-sage-950/30 p-3 rounded-xl border border-sage-200/50 dark:border-sage-900/40">
+              <span class="font-bold text-sage-700 dark:text-sage-400 block mb-0.5">La Mirada del Testigo (Vaciamiento & Entrega):</span>
+              ${escapeHtml(entry.witness)}
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    function deleteJournalEntry(id) {
+      journalEntries = journalEntries.filter(e => e.id !== id);
+      localStorage.setItem(STORAGE_KEY_JOURNAL, JSON.stringify(journalEntries));
+      renderJournalEntries();
+      showToast('Entrada retirada del registro.');
+    }
+
+    function exportJournalJSON() {
+      if (journalEntries.length === 0) {
+        showToast('No hay entradas para exportar.', 'ℹ️');
+        return;
+      }
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(journalEntries, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `patanjali_diario_${new Date().toISOString().split('T')[0]}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast('Archivo JSON descargado correctamente.', '💾');
+    }
+
+    function exportJournalText() {
+      if (journalEntries.length === 0) {
+        showToast('No hay entradas para exportar.', 'ℹ️');
+        return;
+      }
+      let content = "=========================================================\n";
+      content += "  EL DIARIO DEL TESTIGO (SĀKṢIN) · YOGA SUTRAS DE PATAÑJALI\n";
+      content += "=========================================================\n\n";
+
+      journalEntries.forEach((entry, idx) => {
+        content += `[Entrada ${idx + 1}] — ${new Date(entry.date).toLocaleString()}\n`;
+        content += `Dimensión: ${entry.tag}\n`;
+        if (entry.sutraRef) content += `Referencia: ${entry.sutraRef}\n`;
+        content += `Situación: ${entry.situation}\n`;
+        content += `Fluctuación observada: ${entry.reaction}\n`;
+        content += `Espacio del Testigo: ${entry.witness}\n`;
+        content += "---------------------------------------------------------\n\n";
+      });
+
+      const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `patanjali_reflexiones_${new Date().toISOString().split('T')[0]}.txt`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      showToast('Reflexiones descargadas en formato texto.', '📄');
+    }
+
+    /* =====================================================================
+       BIBLIOTECA DE SŪTRAS & COMPENDIO
+       ===================================================================== */
+    function filterSutras(category) {
+      currentCategoryFilter = category;
+      document.querySelectorAll('.sutra-filter-btn').forEach(btn => {
+        if (btn.getAttribute('data-cat') === category) {
+          btn.className = "sutra-filter-btn px-3 py-1.5 rounded-full text-xs font-semibold border border-ash-300 dark:border-neutral-700 bg-ash-900 text-white dark:bg-ash-100 dark:text-ash-900";
+        } else {
+          btn.className = "sutra-filter-btn px-3 py-1.5 rounded-full text-xs font-semibold border border-ash-300 dark:border-neutral-700 text-ash-600 dark:text-ash-400 hover:bg-ash-200/50";
+        }
+      });
+      renderSutrasLibrary();
+    }
+
+    function searchSutras() {
+      renderSutrasLibrary();
+    }
+
+    function renderSutrasLibrary() {
+      const container = document.getElementById('sutras-grid');
+      const search = (document.getElementById('sutra-search-box')?.value || '').toLowerCase();
+
+      const filtered = SUTRAS_DATA.filter(sutra => {
+        const matchesCategory = currentCategoryFilter === 'all' || sutra.category === currentCategoryFilter;
+        const matchesSearch = sutra.sanskrit.toLowerCase().includes(search) ||
+                              sutra.translation.toLowerCase().includes(search) ||
+                              sutra.essence.toLowerCase().includes(search) ||
+                              sutra.action.toLowerCase().includes(search) ||
+                              sutra.id.includes(search);
+        return matchesCategory && matchesSearch;
+      });
+
+      container.innerHTML = filtered.map(s => {
+        return `
+          <div class="bg-white dark:bg-[#181816] border border-ash-200 dark:border-neutral-800 rounded-3xl p-6 shadow-sm hover:border-terracotta-500/50 flex flex-col justify-between space-y-4">
+            
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-0.5 rounded-md font-mono text-xs font-bold bg-ash-100 dark:bg-neutral-800 text-ash-800 dark:text-ash-200">
+                  Sūtra ${s.id}
+                </span>
+                <span class="text-[11px] uppercase tracking-wider font-semibold text-ash-400">
+                  ${s.pada}
+                </span>
+              </div>
+
+              <h3 class="font-serif text-lg font-bold text-ash-900 dark:text-ash-100 italic">
+                ${s.sanskrit}
+              </h3>
+              <p class="text-xs text-terracotta-600 dark:text-terracotta-400 font-medium">
+                «${s.translation}»
+              </p>
+              <p class="text-xs text-ash-600 dark:text-ash-400 leading-relaxed pt-1">
+                ${s.essence}
+              </p>
+            </div>
+
+            <div class="pt-3 border-t border-ash-100 dark:border-neutral-800/80 flex items-center justify-between gap-2">
+              <div class="text-[11px] text-sage-700 dark:text-sage-400 font-medium truncate flex-1">
+                🌱 <strong>Encarnación:</strong> ${s.action}
+              </div>
+              <button onclick="setActiveSutraById('${s.id}')" class="px-3 py-1.5 rounded-xl bg-ash-100 dark:bg-neutral-800 hover:bg-terracotta-600 hover:text-white dark:hover:bg-terracotta-600 text-xs font-semibold whitespace-nowrap transition">
+                Vivir hoy
+              </button>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* =====================================================================
+       MODAL DE REFLEXIÓN RÁPIDA
+       ===================================================================== */
+    function openReflectionModal() {
+      document.getElementById('modal-sutra-context').textContent = `Reflexión sobre el Sūtra ${currentSutra.id}: "${currentSutra.sanskrit}"`;
+      document.getElementById('modal-quick-text').value = '';
+      document.getElementById('modal-reflection').classList.remove('hidden');
+    }
+
+    function closeReflectionModal() {
+      document.getElementById('modal-reflection').classList.add('hidden');
+    }
+
+    function saveModalReflection() {
+      const text = document.getElementById('modal-quick-text').value.trim();
+      if (!text) {
+        showToast('Escribe unas palabras para asentar tu reflexión.', '⚠️');
+        return;
+      }
+
+      const entry = {
+        id: Date.now().toString(),
+        date: new Date().toISOString(),
+        situation: `Contemplación del Sūtra ${currentSutra.id}`,
+        tag: "Aquietamiento Puro",
+        reaction: "Pausa consciente e introspección",
+        witness: text,
+        sutraRef: `Sūtra ${currentSutra.id}`
+      };
+
+      journalEntries.unshift(entry);
+      localStorage.setItem(STORAGE_KEY_JOURNAL, JSON.stringify(journalEntries));
+      renderJournalEntries();
+      closeReflectionModal();
+      showToast('Reflexión integrada en tu Diario.', '🪔');
+    }
+
+    /* =====================================================================
+       UTILIDADES
+       ===================================================================== */
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Inicializar al cargar el DOM
+    window.addEventListener('DOMContentLoaded', () => {
+      initApp();
+    });
+  </script>
+</body>
+</html>
